@@ -23,15 +23,12 @@ class _LandingApiServices implements LandingApiServices {
 
   @override
   Future<HttpResponse<GallaryResponse<List<RemoteImageModel>>>> getSearchImages(
-    GallaryRequest<dynamic> request,
-    QueryParametersRequest queryParametersRequest,
-  ) async {
+      QueryParametersRequest queryParametersRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(queryParametersRequest.toJson());
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson((value) => value));
+    const Map<String, dynamic>? _data = null;
     final _options =
         _setStreamType<HttpResponse<GallaryResponse<List<RemoteImageModel>>>>(
             Options(

@@ -14,7 +14,7 @@ abstract class LandingApiServices {
 
   @GET(APIKeys.apiKeyEndPoint)
   Future<HttpResponse<GallaryResponse<List<RemoteImageModel>>>> getSearchImages(
-    @Body() GallaryRequest request,
+    // @Body() GallaryRequest request,
     @Queries() QueryParametersRequest queryParametersRequest,
   );
 }

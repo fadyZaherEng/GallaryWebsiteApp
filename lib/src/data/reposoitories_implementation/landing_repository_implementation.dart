@@ -20,7 +20,8 @@ class LandingRepositoryImplementation implements LandingRepository {
     try {
       GallaryRequest request = await GallaryRequest().createRequest(null);
       final httpResponse = await _landingApiServices.getSearchImages(
-          request, queryParametersRequest);
+          // request,
+          queryParametersRequest);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(
           data: (httpResponse.data.hits ?? []).mapToImageModelList(),

@@ -29,9 +29,9 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
       GetImagesEvent(
         GallaryRequest(),
         QueryParametersRequest(
-          imageType: "photo",
-          q: "",
           key: Constants.apiKey,
+          imageType: "photo",
+          q: "kk",
         ),
       ),
     );
