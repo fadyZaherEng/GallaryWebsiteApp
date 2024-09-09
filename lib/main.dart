@@ -15,6 +15,7 @@ import 'package:gallary_website_app/src/core/utils/firebase_notification_service
 import 'package:gallary_website_app/src/core/utils/hms_notification_service.dart';
 import 'package:gallary_website_app/src/core/utils/network_connectivity.dart';
 import 'package:gallary_website_app/src/di/injector.dart';
+import 'package:gallary_website_app/src/presentation/blocs/landing/landing_bloc.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_bloc.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_state.dart';
 import 'package:gallary_website_app/src/presentation/widgets/restart_widget.dart';
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<MainCubit>(create: (context) => injector()),
+        BlocProvider<LandingBloc>(create: (context) => injector()),
       ],
       child: BlocBuilder<MainCubit, MainState>(
         buildWhen: (previousState, currentState) {

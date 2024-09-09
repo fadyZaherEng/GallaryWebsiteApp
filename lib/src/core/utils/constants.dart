@@ -13,4 +13,6 @@ class Constants {
   static const String low = "low";
   static const String min = "min";
   static const String defaultPriority = "default";
+
+  static const String apiKey = "45884063-cfe867001d6c33e12d6e8cbc2";
 }

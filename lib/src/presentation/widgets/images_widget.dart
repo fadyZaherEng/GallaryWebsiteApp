@@ -129,7 +129,7 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                                       topRight: Radius.circular(8),
                                     ),
                                     child: CachedNetworkImage(
-                                      imageUrl: '${widget.images[index].url}',
+                                      imageUrl: widget.images[index].imageURL,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorWidget: (context, error,

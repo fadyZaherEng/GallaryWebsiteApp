@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/src/core/base/widget/base_stateful_widget.dart';
+import 'package:gallary_website_app/src/core/utils/constants.dart';
+import 'package:gallary_website_app/src/data/sources/remote/gallary_request.dart';
+import 'package:gallary_website_app/src/data/sources/remote/landing/request/query_paramters_request.dart';
 import 'package:gallary_website_app/src/domain/entities/gallary.dart';
+import 'package:gallary_website_app/src/presentation/blocs/landing/landing_bloc.dart';
 import 'package:gallary_website_app/src/presentation/screens/landing_app/widgets/footer_widget.dart';
 import 'package:gallary_website_app/src/presentation/widgets/custom_app_bar_widget.dart';
 import 'package:gallary_website_app/src/presentation/widgets/images_widget.dart';
@@ -15,41 +20,66 @@ class LandingScreen extends BaseStatefulWidget {
 class _LandingWebScreenState extends BaseState<LandingScreen> {
   List<ImageModel> images = [];
 
+  LandingBloc get _bloc => BlocProvider.of<LandingBloc>(context);
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.add(
+      GetImagesEvent(
+        GallaryRequest(),
+        QueryParametersRequest(
+          imageType: "photo",
+          q: "",
+          key: Constants.apiKey,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget baseBuild(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Scaffold(
-            appBar: CustomAppBarWidget(
-              search: (value) {},
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    child: ImagesWidget(
-                      isLoading: true,
-                      images: images,
-                      isImagesScreen: true,
-                      onImageTap: (int movieId) {
-                        // context.go("${Routes.movie}/$movieId");
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           MovieScreen(movieId: movieId)),
-                        // );
-                      },
-                    ),
+    return BlocConsumer<LandingBloc, LandingState>(listener: (context, state) {
+      if (state is GetImagesSuccess) {
+        images = state.images;
+      } else if (state is GetImagesFailed) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(state.message),
+          ),
+        );
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+          appBar: CustomAppBarWidget(
+            search: (value) {},
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: ImagesWidget(
+                    isLoading: true,
+                    images: images,
+                    isImagesScreen: true,
+                    onImageTap: (int movieId) {
+                      // context.go("${Routes.movie}/$movieId");
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) =>
+                      //           MovieScreen(movieId: movieId)),
+                      // );
+                    },
                   ),
-                  const SizedBox(height: 20),
-                  const FooterWidget(),
-                ],
-              ),
-            ));
-      },
-    );
+                ),
+                const SizedBox(height: 20),
+                const FooterWidget(),
+              ],
+            ),
+          ));
+    });
   }
 }
