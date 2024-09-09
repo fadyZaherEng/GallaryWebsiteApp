@@ -52,7 +52,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
                     style: GoogleFonts.playfairDisplay(
                       fontSize: Responsive.isMobile(context) ? 18 : 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple,
+                      color:_cubit.isDarkMode? Colors.white: Colors.black87,
                     ),
                   ),
                 ),
