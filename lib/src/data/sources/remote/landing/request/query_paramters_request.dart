@@ -7,6 +7,8 @@ class QueryParametersRequest {
   // for this parameters:
   @JsonKey(name: 'image_type')
   String imageType;
+  @JsonKey(name: 'per_page')
+  int perPage;
   @JsonKey(name: 'q')
   String q;
   @JsonKey(name: "key")
@@ -15,6 +17,7 @@ class QueryParametersRequest {
   QueryParametersRequest({
     required this.imageType,
     required this.q,
+    required this.perPage,
     required this.key,
   });
 

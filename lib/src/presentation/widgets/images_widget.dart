@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/src/domain/entities/gallary.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_bloc.dart';
@@ -67,10 +65,11 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                       Expanded(
                         flex: 1,
                         child: SkeletonLine(
-                            style: SkeletonLineStyle(
-                          width: double.infinity,
-                          height: 90,
-                        )),
+                          style: SkeletonLineStyle(
+                            width: double.infinity,
+                            height: 90,
+                          ),
+                        ),
                       )
                     ],
                   )
@@ -119,7 +118,6 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                         },
                         child: Card(
                           elevation: _hoverIndex == index ? 20 : 4,
-                          color: Colors.black12,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -205,12 +203,14 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                                           width: 4,
                                         ),
                                         Expanded(
-                                            child: Text(
-                                          widget.images[index].likes.toString(),
-                                          style: GoogleFonts.titilliumWeb(
-                                              fontSize: 14),
-                                          overflow: TextOverflow.ellipsis,
-                                        ))
+                                          child: Text(
+                                            widget.images[index].likes
+                                                .toString(),
+                                            style: GoogleFonts.titilliumWeb(
+                                                fontSize: 14),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )
                                       ],
                                     )
                                   ],

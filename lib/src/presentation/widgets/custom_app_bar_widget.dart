@@ -67,6 +67,9 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
                       onSubmitted: (value) {
                         widget.search(value);
                       },
+                      onChanged: (value) {
+                        widget.search(value);
+                      },
                       trailing: [
                         IconButton(
                           onPressed: () {},

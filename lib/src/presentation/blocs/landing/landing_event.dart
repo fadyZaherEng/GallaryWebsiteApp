@@ -8,3 +8,8 @@ class GetImagesEvent extends LandingEvent {
   final QueryParametersRequest queryParametersRequest;
   GetImagesEvent(this.request, this.queryParametersRequest);
 }
+//searchImage
+class SearchImageEvent extends LandingEvent {
+  final String query;
+  SearchImageEvent(this.query);
+}

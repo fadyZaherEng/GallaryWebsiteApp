@@ -32,7 +32,8 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
         QueryParametersRequest(
           key: Constants.apiKey,
           imageType: "photo",
-          q: "kk",
+          q: "",
+          perPage: 50,
         ),
       ),
     );
@@ -50,12 +51,16 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
               content: Text(state.message),
             ),
           );
+        }else if (state is SearchImagesSuccess) {
+          images = state.images;
         }
       },
       builder: (context, state) {
         return Scaffold(
           appBar: CustomAppBarWidget(
-            search: (value) {},
+            search: (value) {
+              _bloc.add(SearchImageEvent(value));
+            },
           ),
           body: Column(
             children: [
