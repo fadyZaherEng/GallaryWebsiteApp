@@ -90,7 +90,7 @@ dependencies:
   huawei_push:
   url_strategy:
   go_router:
-  flutter_spinkit:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

@@ -16,6 +16,7 @@ import 'package:gallary_website_app/src/core/utils/hms_notification_service.dart
 import 'package:gallary_website_app/src/core/utils/network_connectivity.dart';
 import 'package:gallary_website_app/src/di/injector.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_bloc.dart';
+import 'package:gallary_website_app/src/presentation/blocs/main/main_state.dart';
 import 'package:gallary_website_app/src/presentation/widgets/restart_widget.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
@@ -32,7 +33,7 @@ Future<void> main() async {
         await _initializeFirebaseServices();
       } else {
         final int resultCode =
-        await HmsApiAvailability().isHMSAvailableWithApkVersion(28);
+            await HmsApiAvailability().isHMSAvailableWithApkVersion(28);
         if (resultCode == 1) {
           await _initializeFirebaseServices();
         } else {
@@ -80,7 +81,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<MainCubit>(create: (context) => injector()),
       ],
-      child: BlocBuilder<MainCubit, Locale>(
+      child: BlocBuilder<MainCubit, MainState>(
         buildWhen: (previousState, currentState) {
           return previousState != currentState;
         },
@@ -104,50 +105,61 @@ class _MyAppState extends State<MyApp> {
                       Navigator.of(navigatorKey.currentContext ?? context)
                           .pop();
                       NetworkConnectivity.instance.isShowNoInternetDialog =
-                      false;
+                          false;
                     }
                   }
                 }
                 return Portal(
                   child: Provider.value(
                     value: routeObserver,
-                    child: kIsWeb ? MaterialApp.router(
-                      routerConfig: webRouter,
-                      themeMode: ThemeMode.light,
-                      supportedLocales: S.delegate.supportedLocales,
-                      localizationsDelegates: const [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      debugShowCheckedModeBanner: false,
-                      theme: AppTheme(state.languageCode).light,
-                      locale: state,
-                    )
+                    child: kIsWeb
+                        ? MaterialApp.router(
+                            routerConfig: webRouter,
+                            themeMode: state is MainChangeLangAndTheme
+                                ? state.theme
+                                : ThemeMode.light,
+                            supportedLocales: S.delegate.supportedLocales,
+                            localizationsDelegates: const [
+                              S.delegate,
+                              GlobalMaterialLocalizations.delegate,
+                              GlobalWidgetsLocalizations.delegate,
+                              GlobalCupertinoLocalizations.delegate,
+                            ],
+                            debugShowCheckedModeBanner: false,
+                            theme: ThemeData.light(),
+                            darkTheme: ThemeData.dark(),
+                            locale: state is MainChangeLangAndTheme
+                                ? Locale(state.lang)
+                                : const Locale('ar'),
+                          )
                         : MaterialApp(
-                      // useInheritedMediaQuery: true,
-                      // builder: DevicePreview.appBuilder,
-                      // darkTheme:AppTheme(state.languageCode).light,
-                      navigatorKey: navigatorKey,
-                      navigatorObservers: [
-                        ChuckerFlutter.navigatorObserver,
-                        routeObserver,
-                      ],
-                      themeMode: ThemeMode.light,
-                      supportedLocales: S.delegate.supportedLocales,
-                      onGenerateRoute: RoutesManager.getRoute,
-                      initialRoute: Routes.landingWeb,
-                      localizationsDelegates: const [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      debugShowCheckedModeBanner: false,
-                      theme: AppTheme(state.languageCode).light,
-                      locale: state,
-                    ),
+                            // useInheritedMediaQuery: true,
+                            // builder: DevicePreview.appBuilder,
+                            // darkTheme:AppTheme(state.languageCode).light,
+                            navigatorKey: navigatorKey,
+                            navigatorObservers: [
+                              ChuckerFlutter.navigatorObserver,
+                              routeObserver,
+                            ],
+                            supportedLocales: S.delegate.supportedLocales,
+                            onGenerateRoute: RoutesManager.getRoute,
+                            // initialRoute: Routes.landingWeb,
+                            localizationsDelegates: const [
+                              S.delegate,
+                              GlobalMaterialLocalizations.delegate,
+                              GlobalWidgetsLocalizations.delegate,
+                              GlobalCupertinoLocalizations.delegate,
+                            ],
+                            debugShowCheckedModeBanner: false,
+                            themeMode: state is MainChangeLangAndTheme
+                                ? state.theme
+                                : ThemeMode.light,
+                            theme: ThemeData.light(),
+                            darkTheme: ThemeData.dark(),
+                            locale: state is MainChangeLangAndTheme
+                                ? Locale(state.lang)
+                                : const Locale('ar'),
+                          ),
                   ),
                 );
               });
