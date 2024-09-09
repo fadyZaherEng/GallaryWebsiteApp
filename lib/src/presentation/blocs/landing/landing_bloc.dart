@@ -71,8 +71,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
                   element.type
                       .toLowerCase()
                       .contains(event.query.toLowerCase()),
-            )
-            .toList();
+            ).toList();
 
         emit(SearchImagesSuccess(images: searchImages));
       } else if (result is DataFailed) {
