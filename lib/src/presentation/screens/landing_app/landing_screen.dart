@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/src/core/base/widget/base_stateful_widget.dart';
 import 'package:gallary_website_app/src/core/utils/constants.dart';
@@ -39,47 +40,57 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
 
   @override
   Widget baseBuild(BuildContext context) {
-    return BlocConsumer<LandingBloc, LandingState>(listener: (context, state) {
-      if (state is GetImagesSuccess) {
-        images = state.images;
-      } else if (state is GetImagesFailed) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(state.message),
-          ),
-        );
-      }
-    }, builder: (context, state) {
-      return Scaffold(
+    return BlocConsumer<LandingBloc, LandingState>(
+      listener: (context, state) {
+        if (state is GetImagesSuccess) {
+          images = state.images;
+        } else if (state is GetImagesFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
           appBar: CustomAppBarWidget(
             search: (value) {},
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: ImagesWidget(
-                    isLoading: true,
-                    images: images,
-                    isImagesScreen: true,
-                    onImageTap: (int movieId) {
-                      // context.go("${Routes.movie}/$movieId");
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) =>
-                      //           MovieScreen(movieId: movieId)),
-                      // );
-                    },
+          body: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        child: ImagesWidget(
+                          isLoading: state is GetImagesLoading,
+                          images: images,
+                          isImagesScreen: true,
+                          onImageTap: (int movieId) {
+                            // context.go("${Routes.movie}/$movieId");
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) =>
+                            //           MovieScreen(movieId: movieId)),
+                            // );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                const FooterWidget(),
-              ],
-            ),
-          ));
-    });
+              ),
+              const SizedBox(height: 20),
+              const FooterWidget(),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
