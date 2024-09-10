@@ -11,14 +11,14 @@ class ImagesWidget extends StatefulWidget {
   final bool isLoading;
   final List<ImageModel> images;
   final void Function(int) onImageTap;
-  final bool isImagesScreen;
+  final ScrollController scrollController;
 
   const ImagesWidget({
     super.key,
     required this.isLoading,
     required this.images,
     required this.onImageTap,
-    this.isImagesScreen = false,
+    required this.scrollController,
   });
 
   @override
@@ -35,6 +35,7 @@ class _ImagesWidgetState extends State<ImagesWidget> {
       builder: (context, state) {
         return GridView.builder(
           shrinkWrap: true,
+          controller: widget.scrollController,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: const Responsive().isMobile(context)
@@ -48,7 +49,7 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                 ? 0.9
                 : 0.8, // Aspect ratio of the grid items
           ),
-          itemCount: widget.isLoading ? 30 : widget.images.length,
+          itemCount: widget.isLoading ? 20 : widget.images.length,
           itemBuilder: (context, index) {
             return widget.isLoading
                 ? const Column(
@@ -128,12 +129,10 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                                     topRight: Radius.circular(8),
                                   ),
                                   child: CachedNetworkImage(
-                                    imageUrl:
-                                        widget.images[index].largeImageURL,
+                                    imageUrl: widget.images[index].largeImageURL,
                                     width: double.infinity,
                                     fit: BoxFit.cover,
-                                    errorWidget: (context, error, stackTrace) =>
-                                        const Icon(
+                                    errorWidget: (context, error, stackTrace) => const Icon(
                                       Icons.error,
                                       weight: double.infinity,
                                       size: 180,
@@ -161,58 +160,34 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Icon(
-                                          Icons.label,
-                                          size: 14,
-                                          color: Colors.purple,
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
+                                        const Icon(Icons.label, size: 14, color: Colors.purple),
+                                        const SizedBox(width: 4),
                                         Expanded(
                                             child: Text(
                                           widget.images[index].tags,
-                                          style: GoogleFonts.titilliumWeb(
-                                              fontSize: 14),
+                                          style: GoogleFonts.titilliumWeb(fontSize: 14),
                                           overflow: TextOverflow.ellipsis,
                                         ))
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
-                                          Icons.visibility,
-                                          size: 14,
-                                          color: Colors.purple,
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Expanded(
-                                            child: Text(
+                                        const Icon(Icons.visibility, size: 14, color: Colors.purple),
+                                        const SizedBox(width: 4),
+                                        Expanded(child: Text(
                                           widget.images[index].views.toString(),
-                                          style: GoogleFonts.titilliumWeb(
-                                              fontSize: 14),
+                                          style: GoogleFonts.titilliumWeb(fontSize: 14),
                                           overflow: TextOverflow.ellipsis,
                                         ))
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
-                                          Icons.thumb_up,
-                                          size: 14,
-                                          color: Colors.purple,
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            widget.images[index].likes
-                                                .toString(),
-                                            style: GoogleFonts.titilliumWeb(
-                                                fontSize: 14),
+                                        const Icon(Icons.thumb_up, size: 14, color: Colors.purple),
+                                        const SizedBox(width: 4),
+                                        Expanded(child: Text(
+                                            widget.images[index].likes.toString(),
+                                            style: GoogleFonts.titilliumWeb(fontSize: 14),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         )

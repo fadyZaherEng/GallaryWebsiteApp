@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/src/core/base/widget/base_stateful_widget.dart';
 import 'package:gallary_website_app/src/core/utils/constants.dart';
@@ -22,20 +21,36 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
   List<ImageModel> images = [];
 
   LandingBloc get _bloc => BlocProvider.of<LandingBloc>(context);
+  final ScrollController _scrollController = ScrollController();
+  int pageIndex = 1;
+  int pageSize = 18;
 
   @override
   void initState() {
     super.initState();
-    _bloc.add(
-      GetImagesEvent(
+    _bloc.add(GetImagesEvent(
         GallaryRequest(),
         QueryParametersRequest(
           key: Constants.apiKey,
           imageType: "photo",
-          q: "",
-          perPage: 50,
-        ),
-      ),
+          page: pageIndex,
+          perPage: pageSize,
+        )));
+    _scrollController.addListener(
+      () {
+        print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          _bloc.add(GetImagesEvent(
+              GallaryRequest(),
+              QueryParametersRequest(
+                key: Constants.apiKey,
+                imageType: "photo",
+                page: ++pageIndex,
+                perPage: pageSize,
+              )));
+        }
+      },
     );
   }
 
@@ -44,14 +59,14 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
     return BlocConsumer<LandingBloc, LandingState>(
       listener: (context, state) {
         if (state is GetImagesSuccess) {
-          images = state.images;
+          images.addAll(state.images);
         } else if (state is GetImagesFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
             ),
           );
-        }else if (state is SearchImagesSuccess) {
+        } else if (state is SearchImagesSuccess) {
           images = state.images;
         }
       },
@@ -59,7 +74,7 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
         return Scaffold(
           appBar: CustomAppBarWidget(
             search: (value) {
-              _bloc.add(SearchImageEvent(value));
+              _bloc.add(SearchImageEvent(value, pageIndex));
             },
           ),
           body: Column(
@@ -69,12 +84,14 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
                         child: ImagesWidget(
                           isLoading: state is GetImagesLoading,
                           images: images,
-                          isImagesScreen: true,
+                          scrollController: _scrollController,
                           onImageTap: (int movieId) {
                             // context.go("${Routes.movie}/$movieId");
                             // Navigator.push(
