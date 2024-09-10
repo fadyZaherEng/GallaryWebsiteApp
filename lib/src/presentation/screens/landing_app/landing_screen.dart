@@ -27,20 +27,35 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
   List<ImageModel> images = [];
 
   LandingBloc get _bloc => BlocProvider.of<LandingBloc>(context);
+  final ScrollController _scrollController = ScrollController();
+  int pageIndex = 1;
+  int pageSize = 18;
 
   @override
   void initState() {
     super.initState();
-    _bloc.add(
-      GetImagesEvent(
+    _bloc.add(GetImagesEvent(
         GallaryRequest(),
         QueryParametersRequest(
           key: Constants.apiKey,
           imageType: "photo",
-          q: "",
-          perPage: 50,
-        ),
-      ),
+          page: pageIndex,
+          perPage: pageSize,
+        )));
+    _scrollController.addListener(() {
+        print("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          _bloc.add(GetImagesEvent(
+              GallaryRequest(),
+              QueryParametersRequest(
+                key: Constants.apiKey,
+                imageType: "photo",
+                page: ++pageIndex,
+                perPage: pageSize,
+              )));
+        }
+      },
     );
   }
 
@@ -49,7 +64,7 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
     return BlocConsumer<LandingBloc, LandingState>(
       listener: (context, state) {
         if (state is GetImagesSuccess) {
-          images = state.images;
+          images.addAll(state.images);
         } else if (state is GetImagesFailed) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
@@ -61,7 +76,7 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
         return Scaffold(
           appBar: CustomAppBarWidget(
             search: (value) {
-              _bloc.add(SearchImageEvent(value));
+              _bloc.add(SearchImageEvent(value, pageIndex));
             },
           ),
           body: Column(
@@ -76,7 +91,7 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
                         child: ImagesWidget(
                           isLoading: state is GetImagesLoading,
                           images: images,
-                          isImagesScreen: true,
+                          scrollController: _scrollController,
                           onImageTap: (int index) {
                             showImageDialog(
                               context: context,

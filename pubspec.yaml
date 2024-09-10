@@ -44,7 +44,6 @@ dependencies:
   shared_preferences:
   flutter_bloc:
   photo_view:
-  skeletons:
   permission_handler:
   json_serializable:
   json_annotation:
@@ -69,6 +68,7 @@ dependencies:
   google_fonts:
   firebase_messaging:
   flutter_local_notifications:
+  skeletons: ^0.0.3
 
 dev_dependencies:
   flutter_test:

@@ -9,16 +9,19 @@ class QueryParametersRequest {
   String imageType;
   @JsonKey(name: 'per_page')
   int perPage;
+  @JsonKey(name: 'page')
+  int page;
   @JsonKey(name: 'q')
-  String q;
+  String? q;
   @JsonKey(name: "key")
   String key;
 
   QueryParametersRequest({
     required this.imageType,
-    required this.q,
+    this.q,
     required this.perPage,
     required this.key,
+    required this.page,
   });
 
   factory QueryParametersRequest.fromJson(Map<String, dynamic> json) =>
