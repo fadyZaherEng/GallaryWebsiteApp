@@ -11,5 +11,6 @@ class GetImagesEvent extends LandingEvent {
 //searchImage
 class SearchImageEvent extends LandingEvent {
   final String query;
-  SearchImageEvent(this.query);
+  final int pageIndex ;
+  SearchImageEvent(this.query, this.pageIndex);
 }

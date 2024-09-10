@@ -33,7 +33,7 @@ Future<void> main() async {
         await _initializeFirebaseServices();
       } else {
         final int resultCode =
-            await HmsApiAvailability().isHMSAvailableWithApkVersion(28);
+        await HmsApiAvailability().isHMSAvailableWithApkVersion(28);
         if (resultCode == 1) {
           await _initializeFirebaseServices();
         } else {
@@ -46,13 +46,6 @@ Future<void> main() async {
   runApp(
     const RestartWidget(MyApp()),
   );
-
-  // runApp(
-  //   DevicePreview(
-  //     enabled: !kReleaseMode,
-  //     builder: (context) => const RestartWidget(MyApp()), // Wrap your app
-  //   ),
-  // );
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -91,77 +84,80 @@ class _MyAppState extends State<MyApp> {
               stream: NetworkConnectivity.instance.myStream,
               builder: (mContext, snapshot) {
                 if (snapshot.hasData && !kIsWeb) {
-                  ConnectivityResult connectivityResult = snapshot.data;
-                  if (connectivityResult == ConnectivityResult.none) {
-                    if (!NetworkConnectivity.instance.isShowNoInternetDialog) {
-                      //   showNoInternetDialogWidget(
-                      //       context: navigatorKey.currentContext ?? context,
-                      //       onTapTryAgain: () {});
-                    }
-                    NetworkConnectivity.instance.isShowNoInternetDialog = true;
-                  } else {
-                    if (NetworkConnectivity.instance.isShowNoInternetDialog &&
-                        Navigator.canPop(
-                            navigatorKey.currentContext ?? context)) {
-                      Navigator.of(navigatorKey.currentContext ?? context)
-                          .pop();
-                      NetworkConnectivity.instance.isShowNoInternetDialog =
-                          false;
-                    }
-                  }
+                 // ConnectivityResult connectivityResult = snapshot.data;
+                // if (connectivityResult == ConnectivityResult.none) {
+                //   if (!NetworkConnectivity.instance.isShowNoInternetDialog) {
+                //     //   showNoInternetDialogWidget(
+                //     //       context: navigatorKey.currentContext ?? context,
+                //     //       onTapTryAgain: () {});
+                //   }
+                //   NetworkConnectivity.instance.isShowNoInternetDialog = true;
+                // } else {
+                //   if (NetworkConnectivity.instance.isShowNoInternetDialog &&
+                //       Navigator.canPop(
+                //           navigatorKey.currentContext ?? context)) {
+                //     Navigator.of(navigatorKey.currentContext ?? context)
+                //         .pop();
+                //     NetworkConnectivity.instance.isShowNoInternetDialog =
+                //         false;
+                //   }
+                // }
+
                 }
                 return Portal(
-                  child: Provider.value(
-                    value: routeObserver,
-                    child: kIsWeb
-                        ? MaterialApp.router(
-                            routerConfig: webRouter,
-                            themeMode: state is MainChangeLangAndTheme
-                                ? state.theme
-                                : ThemeMode.light,
-                            supportedLocales: S.delegate.supportedLocales,
-                            localizationsDelegates: const [
-                              S.delegate,
-                              GlobalMaterialLocalizations.delegate,
-                              GlobalWidgetsLocalizations.delegate,
-                              GlobalCupertinoLocalizations.delegate,
-                            ],
-                            debugShowCheckedModeBanner: false,
-                            theme: ThemeData.light(),
-                            darkTheme: ThemeData.dark(),
-                            locale: state is MainChangeLangAndTheme
-                                ? Locale(state.lang)
-                                : const Locale('ar'),
-                          )
-                        : MaterialApp(
-                            // useInheritedMediaQuery: true,
-                            // builder: DevicePreview.appBuilder,
-                            // darkTheme:AppTheme(state.languageCode).light,
-                            navigatorKey: navigatorKey,
-                            navigatorObservers: [
-                              ChuckerFlutter.navigatorObserver,
-                              routeObserver,
-                            ],
-                            supportedLocales: S.delegate.supportedLocales,
-                            onGenerateRoute: RoutesManager.getRoute,
-                            // initialRoute: Routes.landingWeb,
-                            localizationsDelegates: const [
-                              S.delegate,
-                              GlobalMaterialLocalizations.delegate,
-                              GlobalWidgetsLocalizations.delegate,
-                              GlobalCupertinoLocalizations.delegate,
-                            ],
-                            debugShowCheckedModeBanner: false,
-                            themeMode: state is MainChangeLangAndTheme
-                                ? state.theme
-                                : ThemeMode.light,
-                            theme: ThemeData.light(),
-                            darkTheme: ThemeData.dark(),
-                            locale: state is MainChangeLangAndTheme
-                                ? Locale(state.lang)
-                                : const Locale('ar'),
-                          ),
-                  ),
+                child: Provider.value(
+                value: routeObserver,
+                child: kIsWeb
+                ? MaterialApp.router(
+                routerConfig: webRouter,
+                themeMode: state is MainChangeLangAndTheme
+                ? state.theme
+                    : ThemeMode.light,
+                supportedLocales: S.delegate.supportedLocales,
+                localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                ],
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData.light(),
+                darkTheme: ThemeData.dark(),
+                locale: state is MainChangeLangAndTheme
+                ? Locale(state.lang)
+                    : const Locale('ar'),
+                )
+                    : MaterialApp(
+                // useInheritedMediaQuery: true,
+                // builder: DevicePreview.appBuilder,
+                // darkTheme:AppTheme(state.languageCode).light,
+                navigatorKey: navigatorKey,
+                navigatorObservers: [
+                ChuckerFlutter.navigatorObserver,
+                routeObserver,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                onGenerateRoute: RoutesManager.getRoute,
+                // initialRoute: Routes.landingWeb,
+                localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                ],
+                debugShowCheckedModeBanner: false,
+                themeMode: state is MainChangeLangAndTheme
+                ? state.theme
+                    : ThemeMode.light,
+                theme: ThemeData.light(),
+                darkTheme: ThemeData.dark(),
+                locale: state is MainChangeLangAndTheme
+                ? Locale(state.lang)
+                    : const Locale('ar'),
+                )
+                ,
+                )
+                ,
                 );
               });
         },

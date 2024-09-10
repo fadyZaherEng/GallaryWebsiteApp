@@ -13,6 +13,7 @@ QueryParametersRequest _$QueryParametersRequestFromJson(
       q: json['q'] as String,
       perPage: (json['per_page'] as num).toInt(),
       key: json['key'] as String,
+      page: (json['page'] as num).toInt(),
     );
 
 Map<String, dynamic> _$QueryParametersRequestToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$QueryParametersRequestToJson(
       'per_page': instance.perPage,
       'q': instance.q,
       'key': instance.key,
+      'page': instance.page,
     };

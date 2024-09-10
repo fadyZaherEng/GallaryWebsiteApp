@@ -1,4 +1,5 @@
-import 'dart:html';
+
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:gallary_website_app/src/core/resources/data_state.dart';

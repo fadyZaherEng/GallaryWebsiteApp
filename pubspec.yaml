@@ -42,34 +42,12 @@ dependencies:
   intl:
   retrofit:
   shared_preferences:
-  device_info_plus:
-  firebase_messaging:
-  flutter_local_notifications:
-  rxdart:
   flutter_bloc:
-  flutter_svg:
-  flutter_widget_from_html_core:
-  url_launcher:
-  carousel_slider:
   photo_view:
-  image_picker:
-  equatable:
-  package_info_plus:
-  badges:
-  percent_indicator:
-  skeletons:
-  share_plus:
-  flutter_sound:
   permission_handler:
-  dotted_border:
-  dotted_line:
-  app_settings:
   json_serializable:
   json_annotation:
   pretty_dio_logger:
-  flutter_keyboard_visibility:
-  scrollable_positioned_list:
-  flutter_image_compress:
   path:
   custom_refresh_indicator:
   downloads_path_provider_28:
@@ -77,13 +55,10 @@ dependencies:
   huawei_hmsavailability:
   connectivity_plus:
   http:
-  video_thumbnail:
   loading_animation_widget:
-  multi_image_picker_plus:
   cached_network_image:
   chucker_flutter:
   web:
-  universal_html:
   secure_content:
   provider:
   flutter_portal:
@@ -91,6 +66,9 @@ dependencies:
   url_strategy:
   go_router:
   google_fonts:
+  firebase_messaging:
+  flutter_local_notifications:
+  skeletons: ^0.0.3
 
 dev_dependencies:
   flutter_test:
@@ -104,7 +82,6 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   retrofit_generator:
   build_runner:
-  webview_flutter:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

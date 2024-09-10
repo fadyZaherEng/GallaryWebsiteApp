@@ -51,7 +51,8 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
           key: Constants.apiKey,
           imageType: "photo",
           q: event.query,
-          perPage: 50,
+          perPage: 18,
+          page: event.pageIndex,
         ),
       );
       if (result is DataSuccess) {
