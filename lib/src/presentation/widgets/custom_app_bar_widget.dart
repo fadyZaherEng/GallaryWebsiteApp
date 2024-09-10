@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/generated/l10n.dart';
@@ -28,34 +27,37 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainCubit, MainState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return AppBar(
           flexibleSpace: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding:
+                EdgeInsets.only(top: Responsive.isMobile(context) ? 40 : 15.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: Responsive.isMobile(context)
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 5),
+                  padding: EdgeInsets.only(
+                      left: Responsive.isMobile(context) ? 0 : 10,
+                      right: Responsive.isMobile(context) ? 10 : 0),
                   child: Text(
                     S.of(context).gallary,
                     style: GoogleFonts.playfairDisplay(
-                      fontSize: Responsive.isMobile(context) ? 14 : 24,
+                      fontSize: Responsive.isMobile(context) ? 16 : 24,
                       fontWeight: FontWeight.bold,
-                      color:_cubit.isDarkMode? Colors.white: Colors.black87,
+                      color: _cubit.isDarkMode ? Colors.white : Colors.black87,
                     ),
                   ),
                 ),
-                const SizedBox(width: 50),
+                SizedBox(width: Responsive.isMobile(context) ? 10 : 50),
                 Flexible(
                   child: SizedBox(
                     width: Responsive.isMobile(context)
-                        ? MediaQuery.of(context).size.width * 0.3
+                        ? MediaQuery.of(context).size.width * 0.4
                         : MediaQuery.of(context).size.width * 0.55,
-                    height: 55,
+                    height: Responsive.isMobile(context) ? 40 : 50,
                     child: SearchBar(
                       onSubmitted: (value) {
                         widget.search(value);
@@ -82,7 +84,8 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
           actions: [
             Center(
               child: Padding(
-                padding:  EdgeInsetsDirectional.fromSTEB(0, 20,Responsive.isMobile(context)? 10 : 20, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    0, 14, Responsive.isMobile(context) ? 15 : 20, 0),
                 child: Switch(
                   value: _cubit.isDarkMode,
                   onChanged: (value) {
