@@ -92,24 +92,6 @@ class _MyAppState extends State<MyApp> {
               stream: NetworkConnectivity.instance.myStream,
               builder: (mContext, snapshot) {
                 if (snapshot.hasData && !kIsWeb) {
-                  ConnectivityResult connectivityResult = snapshot.data;
-                  if (connectivityResult == ConnectivityResult.none) {
-                    if (!NetworkConnectivity.instance.isShowNoInternetDialog) {
-                      //   showNoInternetDialogWidget(
-                      //       context: navigatorKey.currentContext ?? context,
-                      //       onTapTryAgain: () {});
-                    }
-                    NetworkConnectivity.instance.isShowNoInternetDialog = true;
-                  } else {
-                    if (NetworkConnectivity.instance.isShowNoInternetDialog &&
-                        Navigator.canPop(
-                            navigatorKey.currentContext ?? context)) {
-                      Navigator.of(navigatorKey.currentContext ?? context)
-                          .pop();
-                      NetworkConnectivity.instance.isShowNoInternetDialog =
-                          false;
-                    }
-                  }
                 }
                 return Portal(
                   child: Provider.value(

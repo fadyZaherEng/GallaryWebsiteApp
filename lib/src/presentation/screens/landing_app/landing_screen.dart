@@ -9,9 +9,11 @@ import 'package:gallary_website_app/src/presentation/blocs/landing/landing_bloc.
 import 'package:gallary_website_app/src/presentation/screens/landing_app/widgets/footer_widget.dart';
 import 'package:gallary_website_app/src/presentation/widgets/custom_app_bar_widget.dart';
 import 'package:gallary_website_app/src/presentation/widgets/images_widget.dart';
-//deploy command
-//if cd flutter ; then git pull&& cd ..; else git clone https://github.com/flutter/flutter.git; fi&&1s&& flutter/bin/flutter doctor && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web
-class LandingScreen extends BaseStatefulWidget {
+//deploy command on vercel
+//flutter/bin/flutter build web --release
+//build/web
+//if cd flutter; then git pull && cd .. ; else git clone https://github.com/flutter/flutter.git; fi && ls && flutter/bin/flutter doctor && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web
+ class LandingScreen extends BaseStatefulWidget {
   const LandingScreen({super.key});
 
   @override
