@@ -50,7 +50,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
                   child: Text(
                     S.of(context).gallary,
                     style: GoogleFonts.playfairDisplay(
-                      fontSize: Responsive.isMobile(context) ? 18 : 24,
+                      fontSize: Responsive.isMobile(context) ? 14 : 24,
                       fontWeight: FontWeight.bold,
                       color:_cubit.isDarkMode? Colors.white: Colors.black87,
                     ),
@@ -60,7 +60,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
                 Flexible(
                   child: SizedBox(
                     width: Responsive.isMobile(context)
-                        ? MediaQuery.of(context).size.width * 0.42
+                        ? MediaQuery.of(context).size.width * 0.3
                         : MediaQuery.of(context).size.width * 0.55,
                     height: 55,
                     child: SearchBar(
@@ -89,7 +89,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
           actions: [
             Center(
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 20, 0),
+                padding:  EdgeInsetsDirectional.fromSTEB(0, 20,Responsive.isMobile(context)? 10 : 20, 0),
                 child: Switch(
                   value: _cubit.isDarkMode,
                   onChanged: (value) {

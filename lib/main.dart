@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gallary_website_app/generated/l10n.dart';
 import 'package:gallary_website_app/src/config/routes/routes_manager.dart';
-import 'package:gallary_website_app/src/config/theme/app_theme.dart';
 import 'package:gallary_website_app/src/core/utils/bloc_observer.dart';
 import 'package:gallary_website_app/src/core/utils/firebase_notification_services.dart';
 import 'package:gallary_website_app/src/core/utils/hms_notification_service.dart';
