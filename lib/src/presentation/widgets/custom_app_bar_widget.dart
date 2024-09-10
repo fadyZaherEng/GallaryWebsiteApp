@@ -6,7 +6,6 @@ import 'package:gallary_website_app/src/domain/entities/responsive.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_bloc.dart';
 import 'package:gallary_website_app/src/presentation/blocs/main/main_state.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:universal_html/html.dart' as html;
 
 class CustomAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final void Function(String value) search;
@@ -30,13 +29,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
   Widget build(BuildContext context) {
     return BlocConsumer<MainCubit, MainState>(
       listener: (context, state) {
-        if (state is MainChangeLangAndTheme) {
-          if (kIsWeb) {
-            // html.window.location.reload();
-          } else {
-            // RestartWidget.restartApp(context);
-          }
-        }
+
       },
       builder: (context, state) {
         return AppBar(
