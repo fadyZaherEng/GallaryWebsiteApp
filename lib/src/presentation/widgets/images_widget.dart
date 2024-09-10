@@ -133,23 +133,20 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                     errorWidget: (context, error, stackTrace) =>
-                                        const Expanded(
-                                            child: Icon(
+                                        const Icon(
                                       Icons.error,
                                       weight: double.infinity,
                                       size: 180,
-                                    )),
+                                    ),
                                     matchTextDirection: true,
                                     placeholder: (context, _) {
-                                      return const Expanded(
-                                        child: SkeletonLine(
-                                          style: SkeletonLineStyle(
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(8),
-                                              topRight: Radius.circular(8),
-                                            ),
+                                      return const SkeletonLine(
+                                        style: SkeletonLineStyle(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(8),
+                                            topRight: Radius.circular(8),
                                           ),
                                         ),
                                       );
