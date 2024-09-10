@@ -98,23 +98,7 @@ class _ImagesWidgetState extends State<ImagesWidget> {
                           : Matrix4.identity(),
                       child: GestureDetector(
                         onTap: () {
-                          // if (widget.isImagesScreen) {
-                          //   if (kIsWeb) {
-                          //     widget.onImageTap(index);
-                          //   } else {
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => ImageScreen(
-                          //                 movieId: widget.movies[index].id)));
-                          //   }
-                          // } else {
-                          //   if (kIsWeb) {
-                          //     context.go(Routes.movies);
-                          //   } else {
-                          //     Navigator.of(context).pushNamed(Routes.movies);
-                          //   }
-                          // }
+                          widget.onImageTap(index);
                         },
                         child: Card(
                           elevation: _hoverIndex == index ? 20 : 4,

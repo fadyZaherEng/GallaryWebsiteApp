@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallary_website_app/src/core/base/widget/base_stateful_widget.dart';
 import 'package:gallary_website_app/src/core/utils/constants.dart';
+import 'package:gallary_website_app/src/core/utils/show_image_dialog.dart';
 import 'package:gallary_website_app/src/data/sources/remote/gallary_request.dart';
 import 'package:gallary_website_app/src/data/sources/remote/landing/request/query_paramters_request.dart';
 import 'package:gallary_website_app/src/domain/entities/gallary.dart';
@@ -46,12 +47,9 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
         if (state is GetImagesSuccess) {
           images = state.images;
         } else if (state is GetImagesFailed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
-        }else if (state is SearchImagesSuccess) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+        } else if (state is SearchImagesSuccess) {
           images = state.images;
         }
       },
@@ -69,20 +67,18 @@ class _LandingWebScreenState extends BaseState<LandingScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
                         child: ImagesWidget(
                           isLoading: state is GetImagesLoading,
                           images: images,
                           isImagesScreen: true,
-                          onImageTap: (int movieId) {
-                            // context.go("${Routes.movie}/$movieId");
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           MovieScreen(movieId: movieId)),
-                            // );
+                          onImageTap: (int index) {
+                            showImageDialog(
+                              context: context,
+                              images: images,
+                              currentIndex: index,
+                            );
                           },
                         ),
                       ),
